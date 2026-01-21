@@ -1,0 +1,58 @@
+.foundations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.foundation-pile {
+  position: relative;
+}
+
+.foundation-pile.drop-target {
+  outline: 2px solid rgba(96, 165, 250, 0.6);
+  outline-offset: 4px;
+  border-radius: 10px;
+}
+
+.foundation-pile.drop-target.drop-valid {
+  outline-color: rgba(34, 197, 94, 0.7);
+}
+
+.foundation-pile.drop-target.drop-invalid {
+  outline-color: rgba(239, 68, 68, 0.7);
+}
+
+.foundation-empty {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed rgba(128, 128, 128, 0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(128, 128, 128, 0.05);
+}
+
+.foundation-placeholder {
+  font-size: 3em;
+  opacity: 0.3;
+  user-select: none;
+}
+
+.foundation-placeholder:nth-child(1),
+.foundation-placeholder:nth-child(3) {
+  color: black;
+}
+
+.foundation-placeholder:nth-child(2),
+.foundation-placeholder:nth-child(4) {
+  color: #dc2626;
+}
+
+@media (prefers-color-scheme: light) {
+  .foundation-empty {
+    background: rgba(128, 128, 128, 0.1);
+  }
+}
