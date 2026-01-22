@@ -453,7 +453,18 @@ function App() {
       const pile = gameState.tableau[pileIndex];
       const card = pile[cardIndex];
 
-      if (!card || !card.faceUp) {
+      if (!card) {
+        return;
+      }
+
+      // If clicking on a face-down card that is the top card, flip it
+      if (!card.faceUp) {
+        if (cardIndex === pile.length - 1) {
+          performMove({
+            type: MoveType.Flip,
+            pile: pileIndex,
+          });
+        }
         return;
       }
 
@@ -606,6 +617,7 @@ function App() {
         cardHeight={layout.cardHeight}
         overlapDistance={layout.tableauOverlap}
         spacing={layout.foundationSpacing}
+        tableauTopOffset={layout.tableauTopOffset}
         onCardPointerDown={startTableauDrag}
         draggingTableau={
           dragState?.source.type === "tableau"

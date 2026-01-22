@@ -34,21 +34,21 @@ jobs:
 
       - name: Get Yarn cache directory
         id: yarn-cache-dir
-        run: echo "dir=$(yarn --cwd cards-web cache dir)" >> "$GITHUB_OUTPUT"
+        run: echo "dir=$(yarn config get cacheFolder)" >> "$GITHUB_OUTPUT"
 
       - name: Cache Yarn
         uses: actions/cache@v4
         with:
           path: ${{ steps.yarn-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('cards-web/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn --cwd cards-web install --immutable
+        run: yarn install --immutable
 
       - name: Build
-        run: yarn --cwd cards-web build
+        run: yarn build
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -56,7 +56,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: cards-web/dist
+          path: dist
 
   deploy:
     needs: build

@@ -6,6 +6,7 @@ import type React from "react";
 import { memo } from "react";
 import type { Pile } from "../engine";
 import { Card } from "./Card";
+import { calculatePileOverlap } from "../hooks/useLayout";
 import "./Tableau.css";
 
 interface TableauProps {
@@ -14,6 +15,7 @@ interface TableauProps {
   cardHeight: number;
   overlapDistance: number;
   spacing: number;
+  tableauTopOffset: number;
   onCardPointerDown?: (
     event: React.PointerEvent<HTMLDivElement>,
     pileIndex: number,
@@ -30,6 +32,7 @@ export const Tableau = memo(function Tableau({
   cardHeight,
   overlapDistance,
   spacing,
+  tableauTopOffset,
   onCardPointerDown,
   draggingTableau,
   dropTarget,
@@ -43,6 +46,25 @@ export const Tableau = memo(function Tableau({
         const pileClassName = `tableau-pile${
           isTarget ? " drop-target" : ""
         }${isTarget ? (isDropTargetValid ? " drop-valid" : " drop-invalid") : ""}`;
+
+        // Calculate dynamic overlap for this specific pile
+        const pileOverlap = calculatePileOverlap(
+          pile,
+          overlapDistance,
+          tableauTopOffset,
+          cardHeight,
+          window.innerHeight
+        );
+
+        // Calculate positions with mixed spacing (half for face-down, full for face-up)
+        const cardPositions = pile.map((_, index) => {
+          let position = 0;
+          for (let i = 0; i < index; i++) {
+            // Face-down cards use half spacing
+            position += pile[i].faceUp ? pileOverlap : pileOverlap * 0.5;
+          }
+          return position;
+        });
 
         return (
           <div
@@ -72,7 +94,7 @@ export const Tableau = memo(function Tableau({
                     data-tableau-index={pileIndex}
                     data-card-index={cardIndex}
                     style={{
-                      top: `${cardIndex * overlapDistance}px`,
+                      top: `${cardPositions[cardIndex]}px`,
                     }}
                   >
                     <Card

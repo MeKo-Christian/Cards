@@ -1,3 +1,4 @@
 {
-  "claudeCode.preferredLocation": "sidebar"
+  "claudeCode.preferredLocation": "sidebar",
+  "claudeCode.allowDangerouslySkipPermissions": true
 }
