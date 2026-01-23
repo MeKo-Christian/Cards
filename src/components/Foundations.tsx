@@ -8,6 +8,12 @@ import type { Pile } from "../engine";
 import type { CardBackStyle } from "../hooks/useGame";
 import { Card } from "./Card";
 import { SuitSymbolByIndex } from "./SuitSymbol";
+import {
+  FoundationPile,
+  FoundationEmpty,
+  FoundationPlaceholder,
+  FoundationCard,
+} from "./FoundationElements";
 
 interface FoundationsProps {
   foundations: [Pile, Pile, Pile, Pile];
@@ -50,28 +56,25 @@ export const Foundations = memo(function Foundations({
           dropTarget.foundationIndex === index;
 
         return (
-          <div
+          <FoundationPile
             key={index}
-            className="foundation-pile relative border-[6px] border-black/15 rounded-[0.5em] box-border"
-            data-foundation-index={index}
-            style={{
-              width: `${holderWidth}px`,
-              height: `${holderHeight}px`,
-            }}
+            foundationIndex={index}
+            width={holderWidth}
+            height={holderHeight}
           >
             {pile.length === 0 ? (
-              <div className="foundation-empty w-full h-full flex items-center justify-center">
-                <div className="foundation-placeholder w-full h-full select-none flex items-center justify-center">
+              <FoundationEmpty>
+                <FoundationPlaceholder>
                   <SuitSymbolByIndex
                     suitIndex={index}
                     size={Math.max(18, Math.min(cardWidth, cardHeight) * 0.33)}
                     color="rgba(0, 0, 0, 0.15)"
                     className="foundation-suit"
                   />
-                </div>
-              </div>
+                </FoundationPlaceholder>
+              </FoundationEmpty>
             ) : (
-              <div className="foundation-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <FoundationCard>
                 <Card
                   card={pile[pile.length - 1]}
                   width={cardWidth}
@@ -90,9 +93,9 @@ export const Foundations = memo(function Foundations({
                       : undefined
                   }
                 />
-              </div>
+              </FoundationCard>
             )}
-          </div>
+          </FoundationPile>
         );
       })}
     </div>

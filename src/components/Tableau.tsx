@@ -8,6 +8,13 @@ import type { Pile } from "../engine";
 import type { CardBackStyle } from "../hooks/useGame";
 import { Card } from "./Card";
 import { calculatePileOverlap } from "../hooks/useLayout";
+import {
+  TableauPile,
+  TableauEmpty,
+  TableauPlaceholder,
+  TableauStack,
+  TableauCard,
+} from "./TableauElements";
 
 interface TableauProps {
   tableau: [Pile, Pile, Pile, Pile, Pile, Pile, Pile, Pile];
@@ -71,43 +78,26 @@ export const Tableau = memo(function Tableau({
         });
 
         return (
-          <div
-            key={pileIndex}
-            className="tableau-pile relative min-h-[100px]"
-            data-tableau-index={pileIndex}
-            style={{
-              width: `${cardWidth}px`,
-            }}
-          >
+          <TableauPile key={pileIndex} pileIndex={pileIndex} width={cardWidth}>
             {/* Always render the placeholder base */}
-            <div
-              className="tableau-empty relative border-[6px] border-black/15 rounded-[0.5em] flex items-center justify-center bg-transparent box-border"
-              style={{
-                width: `${cardWidth}px`,
-                height: `${cardHeight}px`,
-              }}
-            >
-              <div className="tableau-placeholder text-[3em] font-bold select-none text-black/15">
-                K
-              </div>
-            </div>
+            <TableauEmpty width={cardWidth} height={cardHeight}>
+              <TableauPlaceholder>K</TableauPlaceholder>
+            </TableauEmpty>
 
             {/* Render cards on top of the placeholder */}
             {pile.length > 0 && (
-              <div className="tableau-stack absolute top-0 left-0 w-full">
+              <TableauStack>
                 {pile.map((card, cardIndex) => {
                   const isTopCard = cardIndex === pile.length - 1;
                   const shouldHighlight =
                     isTarget && isDropTargetValid && isTopCard;
                   return (
-                    <div
+                    <TableauCard
                       key={card.id}
-                      className="tableau-card absolute left-0 transition-[top] duration-200 ease-out"
-                      data-tableau-index={pileIndex}
-                      data-card-index={cardIndex}
-                      style={{
-                        top: `${cardPositions[cardIndex]}px`,
-                      }}
+                      cardId={card.id}
+                      pileIndex={pileIndex}
+                      cardIndex={cardIndex}
+                      top={cardPositions[cardIndex]}
                     >
                       <Card
                         card={card}
@@ -134,12 +124,12 @@ export const Tableau = memo(function Tableau({
                             : undefined
                         }
                       />
-                    </div>
+                    </TableauCard>
                   );
                 })}
-              </div>
+              </TableauStack>
             )}
-          </div>
+          </TableauPile>
         );
       })}
     </div>

@@ -8,9 +8,12 @@
  */
 
 import type React from "react";
-import { RankSymbolByIndex } from "./RankSymbol";
-import { CardPips } from "./CardPips";
-import { FaceCardCenter } from "./FaceCardCenter";
+import {
+  CardFrontContainer,
+  CardFrontTopCorner,
+  CardFrontBottomCorner,
+  CardFrontCenterContent,
+} from "./CardFrontElements";
 import { SUIT_COLORS } from "./CardDrawers";
 
 interface CardFrontProps {
@@ -48,53 +51,38 @@ export const CardFront = ({
   const isFaceCard = rank >= 10;
 
   return (
-    <div
-      className={`card card-front card-${suitName} relative rounded-[0.3em] shadow-[1px_1px_4px_rgba(0,0,0,0.5)] select-none cursor-pointer touch-none text-black flex flex-col justify-between box-border${className ? ` ${className}` : ""}`}
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        padding: "7px",
-        background: "linear-gradient(150deg, #e1e1e1 0%, #fcfcfc 100%)",
-        ...style,
-      }}
+    <CardFrontContainer
+      width={width}
+      height={height}
+      suitName={suitName}
+      className={className}
+      style={style}
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
     >
       {/* Top-left corner */}
-      <div className="card-corner card-corner-top flex flex-col items-start gap-0 self-start">
-        <RankSymbolByIndex
-          rankIndex={rank}
-          size={cornerRankSize}
-          color={suitColor}
-          className="card-rank flex items-center justify-center overflow-visible"
-        />
-      </div>
+      <CardFrontTopCorner
+        rank={rank}
+        cornerRankSize={cornerRankSize}
+        suitColor={suitColor}
+      />
 
       {/* Card center content */}
-      {isFaceCard ? (
-        <FaceCardCenter
-          rank={rank}
-          suit={suit}
-          width={width}
-          height={height}
-          color={suitColor}
-        />
-      ) : (
-        <CardPips rank={rank} suit={suit} width={width} height={height} />
-      )}
+      <CardFrontCenterContent
+        isFaceCard={isFaceCard}
+        rank={rank}
+        suit={suit}
+        width={width}
+        height={height}
+        suitColor={suitColor}
+      />
 
       {/* Bottom-right corner (rotated) */}
-      <div className="card-corner card-corner-bottom flex flex-col items-end gap-0 self-end">
-        <div className="card-rank-stretch">
-          <RankSymbolByIndex
-            rankIndex={rank}
-            size={cornerRankSize}
-            color={suitColor}
-            className="card-rank flex items-center justify-center overflow-visible"
-            flipped
-          />
-        </div>
-      </div>
-    </div>
+      <CardFrontBottomCorner
+        rank={rank}
+        cornerRankSize={cornerRankSize}
+        suitColor={suitColor}
+      />
+    </CardFrontContainer>
   );
 };

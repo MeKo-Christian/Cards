@@ -3,8 +3,11 @@
  * Matches legacy layout for J, Q, K from Card.Cards.pas
  */
 
-import { SuitSymbolByIndex } from "./SuitSymbol";
-import { RankSymbolByIndex } from "./RankSymbol";
+import {
+  FaceCardBox,
+  FaceCardCornerSuit,
+  FaceCardCenterRank,
+} from "./FaceCardElements";
 
 interface FaceCardCenterProps {
   rank: number;
@@ -32,46 +35,25 @@ export const FaceCardCenter = ({
   const largeRankSize = Math.min(boxWidth, boxHeight) * 0.5;
 
   return (
-    <div
-      className="card-face-box"
-      style={{
-        position: "absolute",
-        left: boxLeft,
-        top: boxTop,
-        width: boxWidth,
-        height: boxHeight,
-        border: "1px solid #888",
-        boxSizing: "border-box",
-      }}
+    <FaceCardBox
+      boxLeft={boxLeft}
+      boxTop={boxTop}
+      boxWidth={boxWidth}
+      boxHeight={boxHeight}
     >
       {/* Small suit in top-left of face box */}
-      <div
-        style={{
-          position: "absolute",
-          left: boxWidth * 0.25,
-          top: 0,
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        <SuitSymbolByIndex suitIndex={suit} size={smallSuitSize} />
-      </div>
+      <FaceCardCornerSuit
+        suit={suit}
+        smallSuitSize={smallSuitSize}
+        boxWidth={boxWidth}
+      />
 
       {/* Large rank letter in center */}
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        <RankSymbolByIndex
-          rankIndex={rank}
-          size={largeRankSize}
-          color={color}
-          disableStretch
-        />
-      </div>
-    </div>
+      <FaceCardCenterRank
+        rank={rank}
+        largeRankSize={largeRankSize}
+        color={color}
+      />
+    </FaceCardBox>
   );
 };
