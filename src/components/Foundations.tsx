@@ -61,7 +61,7 @@ export const Foundations = memo(function Foundations({
             width={holderWidth}
             height={holderHeight}
           >
-{pile.length === 0 ? (
+            {pile.length === 0 ? (
               <FoundationEmpty>
                 <FoundationPlaceholder>
                   <SuitSymbolByIndex

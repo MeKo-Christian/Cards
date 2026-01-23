@@ -38,7 +38,11 @@ export const FoundationEmpty = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const FoundationPlaceholder = ({ children }: { children: ReactNode }) => {
+export const FoundationPlaceholder = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   return (
     <div className="foundation-placeholder w-full h-full select-none flex items-center justify-center">
       {children}
@@ -49,9 +53,7 @@ export const FoundationPlaceholder = ({ children }: { children: ReactNode }) => 
 export const FoundationCard = ({ children }: { children: ReactNode }) => {
   return (
     <div className="foundation-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-      <div className="relative">
-        {children}
-      </div>
+      <div className="relative">{children}</div>
     </div>
   );
 };

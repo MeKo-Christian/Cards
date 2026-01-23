@@ -36,9 +36,7 @@ export function getDropTargetFromPoint(
     return null;
   }
 
-  const foundationEl = element.closest<HTMLElement>(
-    "[data-foundation-index]"
-  );
+  const foundationEl = element.closest<HTMLElement>("[data-foundation-index]");
   if (foundationEl) {
     const foundationIndex = Number(foundationEl.dataset.foundationIndex);
     return Number.isFinite(foundationIndex)
@@ -101,11 +99,9 @@ export function getDropTargetFromRect(rect: DOMRect): DropTarget | null {
           topCard = card;
         }
       });
-      targetEl =
-        topCard.querySelector<HTMLElement>(".card") || topCard;
+      targetEl = topCard.querySelector<HTMLElement>(".card") || topCard;
     } else {
-      targetEl =
-        pileEl.querySelector<HTMLElement>(".tableau-empty") || pileEl;
+      targetEl = pileEl.querySelector<HTMLElement>(".tableau-empty") || pileEl;
     }
 
     if (!targetEl) {

@@ -12,7 +12,11 @@ interface TableauPileProps {
   children: ReactNode;
 }
 
-export const TableauPile = ({ pileIndex, width, children }: TableauPileProps) => {
+export const TableauPile = ({
+  pileIndex,
+  width,
+  children,
+}: TableauPileProps) => {
   return (
     <div
       className="tableau-pile relative min-h-[100px]"
@@ -30,7 +34,11 @@ interface TableauEmptyProps {
   children: ReactNode;
 }
 
-export const TableauEmpty = ({ width, height, children }: TableauEmptyProps) => {
+export const TableauEmpty = ({
+  width,
+  height,
+  children,
+}: TableauEmptyProps) => {
   return (
     <div
       className="tableau-empty relative border-[6px] border-black/15 rounded-[0.5em] flex items-center justify-center bg-transparent box-border"
@@ -51,9 +59,7 @@ export const TableauPlaceholder = ({ children }: { children: ReactNode }) => {
 
 export const TableauStack = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="tableau-stack absolute top-0 left-0 w-full">
-      {children}
-    </div>
+    <div className="tableau-stack absolute top-0 left-0 w-full">{children}</div>
   );
 };
 
