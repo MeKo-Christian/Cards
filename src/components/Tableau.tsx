@@ -8,7 +8,6 @@ import type { Pile } from "../engine";
 import type { CardBackStyle } from "../hooks/useGame";
 import { Card } from "./Card";
 import { calculatePileOverlap } from "../hooks/useLayout";
-import "./Tableau.css";
 
 interface TableauProps {
   tableau: [Pile, Pile, Pile, Pile, Pile, Pile, Pile, Pile];
@@ -44,13 +43,10 @@ export const Tableau = memo(function Tableau({
   isDropTargetValid,
 }: TableauProps) {
   return (
-    <div className="tableau" style={{ gap: `${spacing}px` }}>
+    <div className="flex justify-center items-start p-5 flex-1 overflow-y-auto flex-wrap" style={{ gap: `${spacing}px` }}>
       {tableau.map((pile, pileIndex) => {
         const isTarget =
           dropTarget?.type === "tableau" && dropTarget.pileIndex === pileIndex;
-        const pileClassName = `tableau-pile${
-          isTarget ? " drop-target" : ""
-        }${isTarget ? (isDropTargetValid ? " drop-valid" : " drop-invalid") : ""}`;
 
         // Calculate dynamic overlap for this specific pile
         const pileOverlap = calculatePileOverlap(
@@ -74,7 +70,7 @@ export const Tableau = memo(function Tableau({
         return (
           <div
             key={pileIndex}
-            className={pileClassName}
+            className="relative min-h-[100px]"
             data-tableau-index={pileIndex}
             style={{
               width: `${cardWidth}px`,
@@ -82,18 +78,18 @@ export const Tableau = memo(function Tableau({
           >
             {/* Always render the placeholder base */}
             <div
-              className="tableau-empty"
+              className="relative border-[6px] border-black/15 rounded-[0.5em] flex items-center justify-center bg-transparent box-border"
               style={{
                 width: `${cardWidth}px`,
                 height: `${cardHeight}px`,
               }}
             >
-              <div className="tableau-placeholder">K</div>
+              <div className="text-[3em] font-bold select-none text-black/15">K</div>
             </div>
 
             {/* Render cards on top of the placeholder */}
             {pile.length > 0 && (
-              <div className="tableau-stack">
+              <div className="absolute top-0 left-0 w-full">
                 {pile.map((card, cardIndex) => {
                   const isTopCard = cardIndex === pile.length - 1;
                   const shouldHighlight =
@@ -101,7 +97,7 @@ export const Tableau = memo(function Tableau({
                   return (
                     <div
                       key={card.id}
-                      className="tableau-card"
+                      className="absolute left-0 transition-[top] duration-200 ease-out"
                       data-tableau-index={pileIndex}
                       data-card-index={cardIndex}
                       style={{
@@ -129,7 +125,7 @@ export const Tableau = memo(function Tableau({
                           draggingTableau &&
                           draggingTableau.pileIndex === pileIndex &&
                           cardIndex >= draggingTableau.cardIndex
-                            ? "drag-source"
+                            ? "opacity-0 pointer-events-none"
                             : undefined
                         }
                       />

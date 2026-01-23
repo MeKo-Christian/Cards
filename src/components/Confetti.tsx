@@ -3,7 +3,6 @@
  */
 
 import { useEffect, useRef } from "react";
-import "./Confetti.css";
 
 interface ConfettiProps {
   active: boolean;
@@ -143,5 +142,5 @@ export const Confetti = ({
     return null;
   }
 
-  return <canvas ref={canvasRef} className="confetti-canvas" />;
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-[1000]" />;
 };

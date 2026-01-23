@@ -7,7 +7,6 @@ import type { Card as CardType } from "../engine";
 import type { CardBackStyle } from "../hooks/useGame";
 import { CardBack } from "./CardBack";
 import { CardFront } from "./CardFront";
-import "./Card.css";
 
 interface CardProps {
   card: CardType;
@@ -32,7 +31,10 @@ export const Card = ({
   onPointerDown,
   onDoubleClick,
 }: CardProps) => {
-  const highlightClass = highlight ? " drop-highlight" : "";
+  // Apply white gradient when highlighted
+  const highlightStyle = highlight
+    ? { background: 'linear-gradient(150deg, #ffffff 0%, #ffffff 100%)' }
+    : undefined;
 
   if (!card.faceUp) {
     return (
@@ -40,12 +42,8 @@ export const Card = ({
         width={width}
         height={height}
         cardBackStyle={cardBackStyle}
-        className={
-          className
-            ? className + highlightClass
-            : highlightClass.trim() || undefined
-        }
-        style={style}
+        className={className}
+        style={{ ...style, ...highlightStyle }}
         onPointerDown={onPointerDown}
         onDoubleClick={onDoubleClick}
       />
@@ -58,12 +56,8 @@ export const Card = ({
       suit={card.suit}
       width={width}
       height={height}
-      className={
-        className
-          ? className + highlightClass
-          : highlightClass.trim() || undefined
-      }
-      style={style}
+      className={className}
+      style={{ ...style, ...highlightStyle }}
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
     />

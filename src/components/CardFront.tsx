@@ -54,6 +54,7 @@ export const CardFront = ({
         width: `${width}px`,
         height: `${height}px`,
         padding: '7px',
+        background: 'linear-gradient(150deg, #e1e1e1 0%, #fcfcfc 100%)',
         ...style,
       }}
       onPointerDown={onPointerDown}

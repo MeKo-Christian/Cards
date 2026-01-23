@@ -8,7 +8,6 @@ import type { Pile } from "../engine";
 import type { CardBackStyle } from "../hooks/useGame";
 import { Card } from "./Card";
 import { SuitSymbolByIndex } from "./SuitSymbol";
-import "./Foundations.css";
 
 interface FoundationsProps {
   foundations: [Pile, Pile, Pile, Pile];
@@ -41,19 +40,16 @@ export const Foundations = memo(function Foundations({
   const holderHeight = cardHeight + borderSize * 2;
 
   return (
-    <div className="foundations" style={{ gap: `${spacing}px` }}>
+    <div className="flex justify-center items-center p-5 flex-wrap" style={{ gap: `${spacing}px` }}>
       {foundations.map((pile, index) => {
         const isTarget =
           dropTarget?.type === "foundation" &&
           dropTarget.foundationIndex === index;
-        const pileClassName = `foundation-pile${
-          isTarget ? " drop-target" : ""
-        }${isTarget ? (isDropTargetValid ? " drop-valid" : " drop-invalid") : ""}`;
 
         return (
           <div
             key={index}
-            className={pileClassName}
+            className="relative border-[6px] border-black/15 rounded-[0.5em] box-border"
             data-foundation-index={index}
             style={{
               width: `${holderWidth}px`,
@@ -61,8 +57,8 @@ export const Foundations = memo(function Foundations({
             }}
           >
             {pile.length === 0 ? (
-              <div className="foundation-empty">
-                <div className="foundation-placeholder">
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-full h-full select-none flex items-center justify-center">
                   <SuitSymbolByIndex
                     suitIndex={index}
                     size={Math.max(18, Math.min(cardWidth, cardHeight) * 0.33)}
@@ -72,7 +68,7 @@ export const Foundations = memo(function Foundations({
                 </div>
               </div>
             ) : (
-              <div className="foundation-card">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                 <Card
                   card={pile[pile.length - 1]}
                   width={cardWidth}
@@ -87,7 +83,7 @@ export const Foundations = memo(function Foundations({
                   className={
                     draggingFoundation &&
                     draggingFoundation.foundationIndex === index
-                      ? "drag-source"
+                      ? "opacity-0 pointer-events-none"
                       : undefined
                   }
                 />
