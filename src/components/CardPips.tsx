@@ -8,7 +8,7 @@
  * - Pips are positioned within this area
  */
 
-import { SuitSymbolByIndex } from "./SuitSymbol";
+import { PipAreaContainer, PipSymbol } from "./CardPipsElements";
 
 interface CardPipsProps {
   rank: number; // 0=A, 1=2, ..., 9=10
@@ -138,33 +138,22 @@ export const CardPips = ({ rank, suit, width, height }: CardPipsProps) => {
   if (!layout) return null;
 
   return (
-    <div
-      className="card-pips"
-      style={{
-        position: "absolute",
-        left: pipAreaLeft,
-        top: pipAreaTop,
-        width: pipAreaWidth,
-        height: pipAreaHeight,
-      }}
+    <PipAreaContainer
+      pipAreaLeft={pipAreaLeft}
+      pipAreaTop={pipAreaTop}
+      pipAreaWidth={pipAreaWidth}
+      pipAreaHeight={pipAreaHeight}
     >
       {layout.map((pip, index) => (
-        <div
+        <PipSymbol
           key={index}
-          style={{
-            position: "absolute",
-            left: pip.x * pipAreaWidth,
-            top: pip.y * pipAreaHeight,
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <SuitSymbolByIndex
-            suitIndex={suit}
-            size={pipSize}
-            flipped={pip.flipped}
-          />
-        </div>
+          x={pip.x * pipAreaWidth}
+          y={pip.y * pipAreaHeight}
+          suit={suit}
+          pipSize={pipSize}
+          flipped={pip.flipped}
+        />
       ))}
-    </div>
+    </PipAreaContainer>
   );
 };
