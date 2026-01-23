@@ -25,7 +25,7 @@ Each card has:
 
 - **Purpose**: Main play area where cards are dealt and stacked
 - **Initial capacities**: `[3, 4, 5, 6, 7, 8, 9, 10]` cards per pile (total 52 cards)
-- **Face-down cards**: Initial deal has 3 cards face-down in each pile (so pile 0 starts with 3 cards, all face-down; pile 1 has 3 face-down and 1 face-up, etc.)
+- **Face-down cards**: Last 3 cards in each pile are face-up, rest are face-down (e.g., pile 0: 0 face-down; pile 1: 1 face-down; pile 7: 7 face-down)
 - **Position**: Displayed in a row at bottom of screen
 
 ### Foundation Piles (4 piles)
@@ -88,9 +88,10 @@ function $alea() {
 
 ### Face-Up/Face-Down Rule
 
-- **Face-down count**: First 3 cards in each pile are face-down
-- **Face-up cards**: All cards beyond the first 3 are face-up
-- **Formula**: `card.faceUp = (pileLength > capacity[pileIndex] - 3)`
+- **Face-up count**: Last 3 cards in each pile are face-up
+- **Face-down count**: All cards except the last 3 are face-down (max(0, capacity - 3))
+- **Formula**: `card.faceUp = (nextPileLength > capacity[pileIndex] - 3)`
+- **Result**: Pile 0 (cap 3): 0 face-down; Pile 1 (cap 4): 1 face-down; Pile 7 (cap 10): 7 face-down
 
 ### Auto-Flip Rule
 

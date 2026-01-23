@@ -65,7 +65,7 @@ describe("Dealing", () => {
     }
   });
 
-  it("should have 3 face-down cards per pile", () => {
+  it("should have correct face-down cards per pile based on capacity", () => {
     const game = newGame(12345);
 
     for (let i = 0; i < 8; i++) {
@@ -73,13 +73,13 @@ describe("Dealing", () => {
       const faceDownCount = pile.filter((card) => !card.faceUp).length;
       const capacity = TABLEAU_CAPACITIES[i];
 
-      // Debug output
-      console.log(`Pile ${i}: capacity=${capacity}, total=${pile.length}, faceDown=${faceDownCount}`);
-      pile.slice(0, 5).forEach((card, idx) => {
-        console.log(`  [${idx}] id=${card.id}, faceUp=${card.faceUp}`);
-      });
+      // The dealing logic: card.faceUp = (nextPileLength > capacity - FACE_DOWN_COUNT)
+      // This means last FACE_DOWN_COUNT cards are face-up, rest are face-down
+      // For capacity <= FACE_DOWN_COUNT: all cards are face-up (0 face-down)
+      // For capacity > FACE_DOWN_COUNT: (capacity - FACE_DOWN_COUNT) cards are face-down
+      const expectedFaceDown = Math.max(0, capacity - FACE_DOWN_COUNT);
 
-      expect(faceDownCount).toBe(FACE_DOWN_COUNT);
+      expect(faceDownCount).toBe(expectedFaceDown);
     }
   });
 

@@ -133,6 +133,14 @@ function applyTableauToTableau(
   const cardsToMove = sourcePile.splice(move.cardIndex);
   targetPile.push(...cardsToMove);
 
+  // Auto-flip: if source pile has cards left and top card is face-down, flip it
+  if (sourcePile.length > 0) {
+    const topCard = sourcePile[sourcePile.length - 1];
+    if (!topCard.faceUp) {
+      topCard.faceUp = true;
+    }
+  }
+
   // Record move
   state.lastMove = move;
   state.moveHistory.push(move);
@@ -164,6 +172,14 @@ function applyTableauToFoundation(
   // Apply move
   const movedCard = sourcePile.pop()!;
   foundationPile.push(movedCard);
+
+  // Auto-flip: if source pile has cards left and top card is face-down, flip it
+  if (sourcePile.length > 0) {
+    const topCard = sourcePile[sourcePile.length - 1];
+    if (!topCard.faceUp) {
+      topCard.faceUp = true;
+    }
+  }
 
   // Record move
   state.lastMove = move;

@@ -40,7 +40,7 @@ The core game logic is a **pure, deterministic TypeScript engine** with no React
 
 - `types.ts`: Core data structures (GameState, Card, Move types)
 - `rng.ts`: Mulberry32 PRNG (deterministic per seed, NOT legacy RNG parity)
-- `deal.ts`: Initial card dealing with tableau capacities [3,4,5,6,7,8,9,10] and 3 face-down cards per pile
+- `deal.ts`: Initial card dealing with tableau capacities [3,4,5,6,7,8,9,10]; last 3 cards face-up, rest face-down
 - `moves.ts`: Move validation, `applyMove()`, and single-step `undo()`
 - `helpers.ts`: Finish and Solve algorithms (simple heuristics)
 - `index.ts`: Public API exports
@@ -53,6 +53,7 @@ The core game logic is a **pure, deterministic TypeScript engine** with no React
 - Tableau moves require alternating colors (Black: Spade/Club, Red: Heart/Diamond) and descending rank
 - Foundation moves require same suit + ascending rank by 1
 - Only tableau top cards can move to foundations (no stack-to-foundation moves)
+- Face-down cards: Last 3 cards face-up, all others face-down (formula: `capacity - 3` face-down)
 
 ### React UI Layer (src/)
 
@@ -87,6 +88,7 @@ Implemented in `App.tsx` using Pointer Events API:
 - **Tableau to Foundation**: Only top card can move. Aces start foundations, then same-suit ascending by 1.
 - **Auto-flip**: Newly exposed tableau top cards flip automatically after moves.
 - **Undo**: Single-step only (matches legacy behavior).
+- **Face-down cards**: Determined by formula `card.faceUp = (nextPileLength > capacity - 3)` during dealing.
 
 ### RNG & Determinism
 
@@ -131,6 +133,6 @@ When modifying game behavior, always consult:
 - **Don't ever modify legacy/**: Reference only, changes go in src/
 - **Engine mutations**: Engine functions mutate in place; React layer must clone
 - **Responsive layout**: Card dimensions derive from viewport via `useLayout()`, recalculated on resize
-- **Face-down count**: Always 3 cards face-down per pile in initial deal
+- **Face-down count**: Last 3 cards in each pile are face-up; all others are face-down (i.e., max(0, capacity - 3) face-down cards)
 - **Capacity array**: `[3,4,5,6,7,8,9,10]` must sum to 52 cards
 - **Prefer Delphi Code over JavaScript**: The JavaScript implementation is just a transpilation of the high level Delphi code.
