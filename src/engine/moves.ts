@@ -292,16 +292,62 @@ function undoTableauToTableau(
   const sourcePile = state.tableau[move.fromPile];
   const targetPile = state.tableau[move.toPile];
 
-  // Count how many cards were moved (from cardIndex to end)
-  const moveCount = sourcePile.length - move.cardIndex;
+  // Calculate how many cards to move back
+  // The simplest approach: assume source pile length equals cardIndex (possibly +1 for auto-flip)
+  // Therefore, the original pile had length (cardIndex + N) where N = cards moved
+  // Since we're doing single-step undo, we can calculate N by checking target pile
+  //
+  // Better approach: use the fact that cards in target from some position onwards
+  // are the ones that were moved. Find that position by checking which cards
+  // at the end of target don't "belong" there based on the card below them.
+  let moveCount = 0;
 
-  if (targetPile.length < moveCount) {
-    return false; // Can't undo if cards aren't there
+  // Count cards from end of target that form a contiguous face-up sequence
+  // These are candidates for being the moved cards
+  for (let i = targetPile.length - 1; i >= 0; i--) {
+    const card = targetPile[i];
+
+    if (!card.faceUp) {
+      // Face-down cards can't have been moved (moves only move face-up cards)
+      break;
+    }
+
+    if (i === targetPile.length - 1) {
+      // Last card is definitely part of moved stack
+      moveCount = 1;
+      continue;
+    }
+
+    const cardBelow = targetPile[i];
+    const cardAbove = targetPile[i + 1];
+
+    // Check if these two cards form a valid tableau sequence
+    // If yes, both could be from the moved stack
+    // If no, only the cards above are from the moved stack
+    if (
+      areOppositeColors(cardBelow.suit, cardAbove.suit) &&
+      cardBelow.rank === cardAbove.rank + 1
+    ) {
+      moveCount++;
+    } else {
+      // Cards below this don't form valid sequence with moved cards
+      // So this is where the moved stack starts
+      break;
+    }
   }
 
-  // Move cards back
+  // Verify moveCount makes sense: it should not exceed target pile length
+  if (moveCount === 0 || moveCount > targetPile.length) {
+    return false;
+  }
+
+  if (targetPile.length < moveCount) {
+    return false;
+  }
+
+  // Move cards back to their original position
   const cardsToReturn = targetPile.splice(targetPile.length - moveCount);
-  sourcePile.push(...cardsToReturn);
+  sourcePile.splice(move.cardIndex, 0, ...cardsToReturn);
 
   // Clear last move
   state.lastMove = null;
