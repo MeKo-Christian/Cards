@@ -65,7 +65,12 @@ export const FaceCardCenter = ({
           transform: "translate(-50%, -50%)",
         }}
       >
-        <RankSymbolByIndex rankIndex={rank} size={largeRankSize} color={color} />
+        <RankSymbolByIndex
+          rankIndex={rank}
+          size={largeRankSize}
+          color={color}
+          disableStretch
+        />
       </div>
     </div>
   );

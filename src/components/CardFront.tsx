@@ -40,7 +40,9 @@ export const CardFront = ({
   const suitColor = SUIT_COLORS[suitName];
 
   // Calculate sizes based on card dimensions
-  const cornerRankSize = Math.max(10, height * 0.14);
+  // Legacy uses SmallFont = width / 36, which with default rank height of 6
+  // gives a final size of width / 6
+  const cornerRankSize = Math.max(10, width / 6);
 
   // Face cards (J=10, Q=11, K=12) have different layout
   const isFaceCard = rank >= 10;
@@ -58,14 +60,12 @@ export const CardFront = ({
     >
       {/* Top-left corner */}
       <div className="card-corner card-corner-top">
-        <div className="card-rank-stretch">
-          <RankSymbolByIndex
-            rankIndex={rank}
-            size={cornerRankSize}
-            color={suitColor}
-            className="card-rank"
-          />
-        </div>
+        <RankSymbolByIndex
+          rankIndex={rank}
+          size={cornerRankSize}
+          color={suitColor}
+          className="card-rank"
+        />
       </div>
 
       {/* Card center content */}

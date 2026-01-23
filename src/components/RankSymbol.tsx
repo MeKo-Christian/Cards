@@ -11,6 +11,7 @@ interface RankSymbolProps {
   color: string;
   className?: string;
   flipped?: boolean;
+  stretch?: boolean;
 }
 
 const RANK_ORDER: RankName[] = [
@@ -35,6 +36,7 @@ export const RankSymbol = ({
   color,
   className,
   flipped,
+  stretch = false,
 }: RankSymbolProps) => {
   const { width, height, path } = RANK_PATHS[rank];
 
@@ -43,13 +45,23 @@ export const RankSymbol = ({
   const scaledWidth = width * scale;
   const scaledHeight = height * scale;
 
+  // Build transform string with both scaleX and rotation
+  const transforms: string[] = [];
+  if (stretch) {
+    transforms.push("scaleX(1.4)");
+  }
+  if (flipped) {
+    transforms.push("rotate(180deg)");
+  }
+  const transform = transforms.length > 0 ? transforms.join(" ") : undefined;
+
   return (
     <svg
       width={scaledWidth}
       height={scaledHeight}
       viewBox={`0 0 ${width} ${height}`}
       className={className}
-      style={flipped ? { transform: "rotate(180deg)" } : undefined}
+      style={transform ? { transform, overflow: "visible" } : { overflow: "visible" }}
     >
       <path d={path} fill={color} fillRule="evenodd" />
     </svg>
@@ -72,6 +84,12 @@ export const RankSymbolByIndex = ({
   flipped,
 }: RankSymbolByIndexProps) => {
   const rank = RANK_ORDER[rankIndex];
+
+  // Cards 2-9 (rank indices 1-8) get horizontal stretch like legacy
+  // NOT Ace (0), 10 (9), J (10), Q (11), K (12)
+  // Only apply in corner positions (not in center of face cards)
+  const shouldStretch = rankIndex >= 1 && rankIndex <= 8;
+
   return (
     <RankSymbol
       rank={rank}
@@ -79,6 +97,7 @@ export const RankSymbolByIndex = ({
       color={color}
       className={className}
       flipped={flipped}
+      stretch={shouldStretch}
     />
   );
 };
