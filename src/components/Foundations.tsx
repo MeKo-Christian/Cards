@@ -52,7 +52,7 @@ export const Foundations = memo(function Foundations({
         return (
           <div
             key={index}
-            className="relative border-[6px] border-black/15 rounded-[0.5em] box-border"
+            className="foundation-pile relative border-[6px] border-black/15 rounded-[0.5em] box-border"
             data-foundation-index={index}
             style={{
               width: `${holderWidth}px`,
@@ -60,8 +60,8 @@ export const Foundations = memo(function Foundations({
             }}
           >
             {pile.length === 0 ? (
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="w-full h-full select-none flex items-center justify-center">
+              <div className="foundation-empty w-full h-full flex items-center justify-center">
+                <div className="foundation-placeholder w-full h-full select-none flex items-center justify-center">
                   <SuitSymbolByIndex
                     suitIndex={index}
                     size={Math.max(18, Math.min(cardWidth, cardHeight) * 0.33)}
@@ -71,7 +71,7 @@ export const Foundations = memo(function Foundations({
                 </div>
               </div>
             ) : (
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <div className="foundation-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                 <Card
                   card={pile[pile.length - 1]}
                   width={cardWidth}

@@ -73,7 +73,7 @@ export const Tableau = memo(function Tableau({
         return (
           <div
             key={pileIndex}
-            className="relative min-h-[100px]"
+            className="tableau-pile relative min-h-[100px]"
             data-tableau-index={pileIndex}
             style={{
               width: `${cardWidth}px`,
@@ -81,20 +81,20 @@ export const Tableau = memo(function Tableau({
           >
             {/* Always render the placeholder base */}
             <div
-              className="relative border-[6px] border-black/15 rounded-[0.5em] flex items-center justify-center bg-transparent box-border"
+              className="tableau-empty relative border-[6px] border-black/15 rounded-[0.5em] flex items-center justify-center bg-transparent box-border"
               style={{
                 width: `${cardWidth}px`,
                 height: `${cardHeight}px`,
               }}
             >
-              <div className="text-[3em] font-bold select-none text-black/15">
+              <div className="tableau-placeholder text-[3em] font-bold select-none text-black/15">
                 K
               </div>
             </div>
 
             {/* Render cards on top of the placeholder */}
             {pile.length > 0 && (
-              <div className="absolute top-0 left-0 w-full">
+              <div className="tableau-stack absolute top-0 left-0 w-full">
                 {pile.map((card, cardIndex) => {
                   const isTopCard = cardIndex === pile.length - 1;
                   const shouldHighlight =
@@ -102,7 +102,7 @@ export const Tableau = memo(function Tableau({
                   return (
                     <div
                       key={card.id}
-                      className="absolute left-0 transition-[top] duration-200 ease-out"
+                      className="tableau-card absolute left-0 transition-[top] duration-200 ease-out"
                       data-tableau-index={pileIndex}
                       data-card-index={cardIndex}
                       style={{
