@@ -6,6 +6,7 @@ import "./TopBar.css";
 
 interface TopBarProps {
   seed: number;
+  isSolvable: boolean;
   onNew: () => void;
   onRetry: () => void;
   onFinish: () => void;
@@ -15,6 +16,7 @@ interface TopBarProps {
 
 export function TopBar({
   seed,
+  isSolvable,
   onNew,
   onRetry,
   onFinish,
@@ -23,7 +25,10 @@ export function TopBar({
 }: TopBarProps) {
   return (
     <div className="top-bar">
-      <div className="seed-display">Seed: {seed}</div>
+      <div className="seed-display">
+        <span>Seed: {seed}</span>
+        {isSolvable ? <span className="seed-badge">Solvable</span> : null}
+      </div>
       <div className="top-bar-controls">
         <div className="button-group">
           <button onClick={onNew} title="New Game (n)">

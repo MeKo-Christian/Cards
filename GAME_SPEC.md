@@ -52,10 +52,9 @@ function $alea() {
 - **Seed storage**: Last seed stored in localStorage as "SeedIndex"
 
 ### RNG Parity Decision
-**Decision: Exact parity with legacy RNG is NOT required**
-- Modern implementation may use different RNG (e.g., seedrandom library)
+**Decision: Use legacy Alea RNG for parity**
+- Modern implementation uses the Alea PRNG to match legacy sequences
 - Requirement: Deterministic per seed (same seed = same deal)
-- Golden seed fixtures will validate correct dealing logic, not exact RNG matching
 
 ## Dealing Rules
 

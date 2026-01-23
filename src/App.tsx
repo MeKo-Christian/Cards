@@ -4,7 +4,11 @@
 
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useGame, readStoredCardBackStyle } from "./hooks/useGame";
+import {
+  isSolvableSeed,
+  readStoredCardBackStyle,
+  useGame,
+} from "./hooks/useGame";
 import { useLayout } from "./hooks/useLayout";
 import { TopBar } from "./components/TopBar";
 import { Foundations } from "./components/Foundations";
@@ -588,10 +592,41 @@ function App() {
     ]
   );
 
+  const handleTableauDoubleClick = useCallback(
+    (pileIndex: number, cardIndex: number) => {
+      if (dragStateRef.current) {
+        return;
+      }
+
+      const pile = gameState.tableau[pileIndex];
+      const card = pile[cardIndex];
+      if (!card || !card.faceUp) {
+        return;
+      }
+
+      if (cardIndex !== pile.length - 1) {
+        return;
+      }
+
+      const foundationIndex = card.suit;
+      if (!canDropOnFoundation(card, gameState.foundations[foundationIndex])) {
+        return;
+      }
+
+      performMove({
+        type: MoveType.TableauToFoundation,
+        fromPile: pileIndex,
+        toFoundation: foundationIndex,
+      });
+    },
+    [gameState, performMove]
+  );
+
   return (
     <div className={`app${reducedMotion ? " reduced-motion" : ""}`}>
       <TopBar
         seed={gameState.seed}
+        isSolvable={isSolvableSeed(gameState.seed)}
         onNew={() => startNewGame()}
         onRetry={retryGame}
         onFinish={handleFinish}
@@ -602,6 +637,7 @@ function App() {
         foundations={gameState.foundations}
         cardWidth={layout.cardWidth}
         cardHeight={layout.cardHeight}
+        cardBackStyle={cardBackStyle}
         spacing={layout.foundationSpacing}
         onCardPointerDown={startFoundationDrag}
         draggingFoundation={
@@ -621,6 +657,7 @@ function App() {
         spacing={layout.foundationSpacing}
         tableauTopOffset={layout.tableauTopOffset}
         onCardPointerDown={startTableauDrag}
+        onCardDoubleClick={handleTableauDoubleClick}
         draggingTableau={
           dragState?.source.type === "tableau"
             ? {
@@ -647,6 +684,7 @@ function App() {
                   card={card}
                   width={layout.cardWidth}
                   height={layout.cardHeight}
+                  cardBackStyle={cardBackStyle}
                 />
               </div>
             ))}

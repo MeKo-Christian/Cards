@@ -23,6 +23,7 @@ interface TableauProps {
     pileIndex: number,
     cardIndex: number
   ) => void;
+  onCardDoubleClick?: (pileIndex: number, cardIndex: number) => void;
   draggingTableau?: { pileIndex: number; cardIndex: number } | null;
   dropTarget?: { type: "tableau"; pileIndex: number } | null;
   isDropTargetValid?: boolean;
@@ -37,6 +38,7 @@ export const Tableau = memo(function Tableau({
   spacing,
   tableauTopOffset,
   onCardPointerDown,
+  onCardDoubleClick,
   draggingTableau,
   dropTarget,
   isDropTargetValid,
@@ -90,37 +92,48 @@ export const Tableau = memo(function Tableau({
               </div>
             ) : (
               <div className="tableau-stack">
-                {pile.map((card, cardIndex) => (
-                  <div
-                    key={card.id}
-                    className="tableau-card"
-                    data-tableau-index={pileIndex}
-                    data-card-index={cardIndex}
-                    style={{
-                      top: `${cardPositions[cardIndex]}px`,
-                    }}
-                  >
-                    <Card
-                      card={card}
-                      width={cardWidth}
-                      height={cardHeight}
-                      cardBackStyle={cardBackStyle}
-                      onPointerDown={
-                        onCardPointerDown
-                          ? (event) =>
-                              onCardPointerDown(event, pileIndex, cardIndex)
-                          : undefined
-                      }
-                      className={
-                        draggingTableau &&
-                        draggingTableau.pileIndex === pileIndex &&
-                        cardIndex >= draggingTableau.cardIndex
-                          ? "drag-source"
-                          : undefined
-                      }
-                    />
-                  </div>
-                ))}
+                {pile.map((card, cardIndex) => {
+                  const isTopCard = cardIndex === pile.length - 1;
+                  const shouldHighlight =
+                    isTarget && isDropTargetValid && isTopCard;
+                  return (
+                    <div
+                      key={card.id}
+                      className="tableau-card"
+                      data-tableau-index={pileIndex}
+                      data-card-index={cardIndex}
+                      style={{
+                        top: `${cardPositions[cardIndex]}px`,
+                      }}
+                    >
+                      <Card
+                        card={card}
+                        width={cardWidth}
+                        height={cardHeight}
+                        cardBackStyle={cardBackStyle}
+                        highlight={shouldHighlight}
+                        onPointerDown={
+                          onCardPointerDown
+                            ? (event) =>
+                                onCardPointerDown(event, pileIndex, cardIndex)
+                            : undefined
+                        }
+                        onDoubleClick={
+                          onCardDoubleClick
+                            ? () => onCardDoubleClick(pileIndex, cardIndex)
+                            : undefined
+                        }
+                        className={
+                          draggingTableau &&
+                          draggingTableau.pileIndex === pileIndex &&
+                          cardIndex >= draggingTableau.cardIndex
+                            ? "drag-source"
+                            : undefined
+                        }
+                      />
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

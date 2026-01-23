@@ -16,6 +16,7 @@ interface CardBackProps {
   className?: string;
   style?: React.CSSProperties;
   onPointerDown?: React.PointerEventHandler<HTMLDivElement>;
+  onDoubleClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export function CardBack({
@@ -25,6 +26,7 @@ export function CardBack({
   className,
   style,
   onPointerDown,
+  onDoubleClick,
 }: CardBackProps) {
   const backClass =
     cardBackStyle === "legacy" ? "card-back-legacy" : "card-back-modern";
@@ -38,6 +40,7 @@ export function CardBack({
         ...style,
       }}
       onPointerDown={onPointerDown}
+      onDoubleClick={onDoubleClick}
     >
       {cardBackStyle === "legacy" ? (
         <div className="card-back-inner">

@@ -22,6 +22,7 @@ interface CardFrontProps {
   className?: string;
   style?: React.CSSProperties;
   onPointerDown?: React.PointerEventHandler<HTMLDivElement>;
+  onDoubleClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 const SUIT_NAMES = ["spade", "heart", "club", "diamond"] as const;
@@ -34,6 +35,7 @@ export function CardFront({
   className,
   style,
   onPointerDown,
+  onDoubleClick,
 }: CardFrontProps) {
   const suitName = SUIT_NAMES[suit];
   const suitColor = SUIT_COLORS[suitName];
@@ -54,6 +56,7 @@ export function CardFront({
         ...style,
       }}
       onPointerDown={onPointerDown}
+      onDoubleClick={onDoubleClick}
     >
       {/* Top-left corner */}
       <div className="card-corner card-corner-top">

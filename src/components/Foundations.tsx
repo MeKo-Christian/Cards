@@ -5,6 +5,7 @@
 import type React from "react";
 import { memo } from "react";
 import type { Pile } from "../engine";
+import type { CardBackStyle } from "../hooks/useGame";
 import { Card } from "./Card";
 import "./Foundations.css";
 
@@ -12,6 +13,7 @@ interface FoundationsProps {
   foundations: [Pile, Pile, Pile, Pile];
   cardWidth: number;
   cardHeight: number;
+  cardBackStyle?: CardBackStyle;
   spacing: number;
   onCardPointerDown?: (
     event: React.PointerEvent<HTMLDivElement>,
@@ -26,6 +28,7 @@ export const Foundations = memo(function Foundations({
   foundations,
   cardWidth,
   cardHeight,
+  cardBackStyle,
   spacing,
   onCardPointerDown,
   draggingFoundation,
@@ -63,6 +66,7 @@ export const Foundations = memo(function Foundations({
                 card={pile[pile.length - 1]}
                 width={cardWidth}
                 height={cardHeight}
+                cardBackStyle={cardBackStyle}
                 onPointerDown={
                   onCardPointerDown
                     ? (event) => onCardPointerDown(event, index)

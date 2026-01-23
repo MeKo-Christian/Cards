@@ -116,7 +116,7 @@ export type Move =
 export interface RngState {
   /** Current seed value */
   seed: number;
-  /** Internal state for seedrandom (we'll use a simple implementation) */
+  /** Internal state for Alea (s0, s1, s2, c) */
   state: number[];
 }
 

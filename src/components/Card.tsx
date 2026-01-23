@@ -14,9 +14,11 @@ interface CardProps {
   width: number;
   height: number;
   cardBackStyle?: CardBackStyle;
+  highlight?: boolean;
   className?: string;
   style?: React.CSSProperties;
   onPointerDown?: React.PointerEventHandler<HTMLDivElement>;
+  onDoubleClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export function Card({
@@ -24,19 +26,24 @@ export function Card({
   width,
   height,
   cardBackStyle = "legacy",
+  highlight,
   className,
   style,
   onPointerDown,
+  onDoubleClick,
 }: CardProps) {
+  const highlightClass = highlight ? " drop-highlight" : "";
+
   if (!card.faceUp) {
     return (
       <CardBack
         width={width}
         height={height}
         cardBackStyle={cardBackStyle}
-        className={className}
+        className={className ? className + highlightClass : highlightClass.trim() || undefined}
         style={style}
         onPointerDown={onPointerDown}
+        onDoubleClick={onDoubleClick}
       />
     );
   }
@@ -47,9 +54,10 @@ export function Card({
       suit={card.suit}
       width={width}
       height={height}
-      className={className}
+      className={className ? className + highlightClass : highlightClass.trim() || undefined}
       style={style}
       onPointerDown={onPointerDown}
+      onDoubleClick={onDoubleClick}
     />
   );
 }

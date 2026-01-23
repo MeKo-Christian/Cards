@@ -17,9 +17,23 @@
 }
 
 .seed-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 1.2em;
   font-weight: 500;
   color: #888;
+}
+
+.seed-badge {
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #cfe8c6;
+  border: 1px solid rgba(207, 232, 198, 0.35);
 }
 
 .button-group {
@@ -39,6 +53,7 @@
   }
 
   .seed-display {
+    justify-content: center;
     text-align: center;
   }
 

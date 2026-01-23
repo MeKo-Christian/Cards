@@ -1,7 +1,7 @@
 .card {
   position: relative;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 0.3em;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
   user-select: none;
   cursor: pointer;
   touch-action: none;
@@ -9,6 +9,19 @@
 
 .card.drag-source {
   opacity: 0;
+  pointer-events: none;
+}
+
+/* Highlight effect for valid drop targets - matches legacy rgba(255,255,255,0.5) overlay */
+.card.drop-highlight::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: inherit;
   pointer-events: none;
 }
 
