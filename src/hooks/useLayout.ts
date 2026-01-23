@@ -10,6 +10,7 @@ export interface LayoutDimensions {
   cardHeight: number;
   tableauOverlap: number;
   foundationSpacing: number;
+  tableauSpacing: number;
   tableauTopOffset: number;
 }
 
@@ -40,6 +41,7 @@ function areDimensionsEqual(a: LayoutDimensions, b: LayoutDimensions): boolean {
     a.cardHeight === b.cardHeight &&
     a.tableauOverlap === b.tableauOverlap &&
     a.foundationSpacing === b.foundationSpacing &&
+    a.tableauSpacing === b.tableauSpacing &&
     a.tableauTopOffset === b.tableauTopOffset
   );
 }
@@ -62,8 +64,11 @@ function calculateDimensions(): LayoutDimensions {
   // Pile stacking offset: max of height/5.1 or viewport/32 (from original)
   const tableauOverlap = Math.max(cardHeight / 5.1, viewportHeight / 32);
 
-  // Foundation spacing uses same as tableau (1.1x card width in original)
-  const foundationSpacing = cardWidth * 0.1;
+  // Foundation spacing: wider gaps to match legacy feel
+  const foundationSpacing = cardWidth * 0.26;
+
+  // Tableau spacing: tighter than foundations
+  const tableauSpacing = cardWidth * 0.1;
 
   // Calculate tableau top offset (where tableau piles start)
   // This matches the legacy positioning: foundations + margin
@@ -77,6 +82,7 @@ function calculateDimensions(): LayoutDimensions {
     cardHeight,
     tableauOverlap,
     foundationSpacing,
+    tableauSpacing,
     tableauTopOffset,
   };
 }

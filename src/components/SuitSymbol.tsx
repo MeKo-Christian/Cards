@@ -8,15 +8,24 @@ import { SUIT_PATHS, SUIT_COLORS, type SuitName } from "./CardDrawers";
 interface SuitSymbolProps {
   suit: SuitName;
   size: number;
+  color?: string;
+  fit?: boolean;
   className?: string;
   flipped?: boolean;
 }
 
 const SUIT_ORDER: SuitName[] = ["spade", "heart", "club", "diamond"];
 
-export function SuitSymbol({ suit, size, className, flipped }: SuitSymbolProps) {
+export function SuitSymbol({
+  suit,
+  size,
+  color: overrideColor,
+  fit,
+  className,
+  flipped,
+}: SuitSymbolProps) {
   const { width, height, path } = SUIT_PATHS[suit];
-  const color = SUIT_COLORS[suit];
+  const color = overrideColor ?? SUIT_COLORS[suit];
 
   // Scale to fit the requested size while maintaining aspect ratio
   const scale = size / Math.max(width, height);
@@ -25,8 +34,8 @@ export function SuitSymbol({ suit, size, className, flipped }: SuitSymbolProps) 
 
   return (
     <svg
-      width={scaledWidth}
-      height={scaledHeight}
+      width={fit ? "100%" : scaledWidth}
+      height={fit ? "100%" : scaledHeight}
       viewBox={`0 0 ${width} ${height}`}
       className={className}
       style={flipped ? { transform: "rotate(180deg)" } : undefined}
@@ -39,6 +48,8 @@ export function SuitSymbol({ suit, size, className, flipped }: SuitSymbolProps) 
 interface SuitSymbolByIndexProps {
   suitIndex: number;
   size: number;
+  color?: string;
+  fit?: boolean;
   className?: string;
   flipped?: boolean;
 }
@@ -46,9 +57,20 @@ interface SuitSymbolByIndexProps {
 export function SuitSymbolByIndex({
   suitIndex,
   size,
+  color,
+  fit,
   className,
   flipped,
 }: SuitSymbolByIndexProps) {
   const suit = SUIT_ORDER[suitIndex];
-  return <SuitSymbol suit={suit} size={size} className={className} flipped={flipped} />;
+  return (
+    <SuitSymbol
+      suit={suit}
+      size={size}
+      color={color}
+      fit={fit}
+      className={className}
+      flipped={flipped}
+    />
+  );
 }

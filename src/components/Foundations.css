@@ -8,6 +8,16 @@
 
 .foundation-pile {
   position: relative;
+  border: 6px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.5em;
+  box-sizing: border-box;
+}
+
+.foundation-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .foundation-pile.drop-target {
@@ -27,32 +37,16 @@
 .foundation-empty {
   width: 100%;
   height: 100%;
-  border: 2px dashed rgba(128, 128, 128, 0.3);
-  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(128, 128, 128, 0.05);
 }
 
 .foundation-placeholder {
-  font-size: 3em;
-  opacity: 0.3;
+  width: 100%;
+  height: 100%;
   user-select: none;
-}
-
-.foundation-placeholder:nth-child(1),
-.foundation-placeholder:nth-child(3) {
-  color: black;
-}
-
-.foundation-placeholder:nth-child(2),
-.foundation-placeholder:nth-child(4) {
-  color: #dc2626;
-}
-
-@media (prefers-color-scheme: light) {
-  .foundation-empty {
-    background: rgba(128, 128, 128, 0.1);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

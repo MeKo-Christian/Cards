@@ -654,7 +654,7 @@ function App() {
         cardHeight={layout.cardHeight}
         cardBackStyle={cardBackStyle}
         overlapDistance={layout.tableauOverlap}
-        spacing={layout.foundationSpacing}
+        spacing={layout.tableauSpacing}
         tableauTopOffset={layout.tableauTopOffset}
         onCardPointerDown={startTableauDrag}
         onCardDoubleClick={handleTableauDoubleClick}
