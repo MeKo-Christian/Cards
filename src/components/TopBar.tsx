@@ -21,7 +21,9 @@ export const TopBar = ({
   onSolve,
   onUndo,
 }: TopBarProps) => {
-  const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  const isLocalhost =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
 
   const handleSeedClick = () => {
     // Copy current URL to clipboard
@@ -63,11 +65,19 @@ export const TopBar = ({
           <button onClick={onRetry} title="Retry (r)" className="min-w-[70px]">
             Retry
           </button>
-          <button onClick={onFinish} title="Finish (f)" className="min-w-[70px]">
+          <button
+            onClick={onFinish}
+            title="Finish (f)"
+            className="min-w-[70px]"
+          >
             Finish
           </button>
           {isLocalhost && (
-            <button onClick={onSolve} title="Solve (s)" className="min-w-[70px]">
+            <button
+              onClick={onSolve}
+              title="Solve (s)"
+              className="min-w-[70px]"
+            >
               Solve
             </button>
           )}

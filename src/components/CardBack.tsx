@@ -37,8 +37,8 @@ export const CardBack = ({
         width: `${width}px`,
         height: `${height}px`,
         background: isOrnament
-          ? '#ffffff'
-          : 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
+          ? "#ffffff"
+          : "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
         ...style,
       }}
       onPointerDown={onPointerDown}

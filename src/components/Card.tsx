@@ -33,7 +33,7 @@ export const Card = ({
 }: CardProps) => {
   // Apply white gradient when highlighted
   const highlightStyle = highlight
-    ? { background: 'linear-gradient(150deg, #ffffff 0%, #ffffff 100%)' }
+    ? { background: "linear-gradient(150deg, #ffffff 0%, #ffffff 100%)" }
     : undefined;
 
   if (!card.faceUp) {

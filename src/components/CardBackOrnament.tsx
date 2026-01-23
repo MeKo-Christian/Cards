@@ -10,7 +10,11 @@ interface CardBackOrnamentProps {
   height?: number;
 }
 
-export const CardBackOrnament = ({ className, width, height }: CardBackOrnamentProps) => {
+export const CardBackOrnament = ({
+  className,
+  width,
+  height,
+}: CardBackOrnamentProps) => {
   const style = width && height ? { width, height } : undefined;
   return (
     <svg

@@ -61,7 +61,9 @@ export const RankSymbol = ({
       height={scaledHeight}
       viewBox={`0 0 ${width} ${height}`}
       className={className}
-      style={transform ? { transform, overflow: "visible" } : { overflow: "visible" }}
+      style={
+        transform ? { transform, overflow: "visible" } : { overflow: "visible" }
+      }
     >
       <path d={path} fill={color} fillRule="evenodd" />
     </svg>

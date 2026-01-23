@@ -38,7 +38,11 @@ export const SuitSymbol = ({
       height={fit ? "100%" : scaledHeight}
       viewBox={`0 0 ${width} ${height}`}
       className={className}
-      style={flipped ? { transform: "rotate(180deg)", overflow: "visible" } : { overflow: "visible" }}
+      style={
+        flipped
+          ? { transform: "rotate(180deg)", overflow: "visible" }
+          : { overflow: "visible" }
+      }
     >
       <path d={path} fill={color} />
     </svg>

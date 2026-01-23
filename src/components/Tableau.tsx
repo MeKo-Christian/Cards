@@ -43,7 +43,10 @@ export const Tableau = memo(function Tableau({
   isDropTargetValid,
 }: TableauProps) {
   return (
-    <div className="flex justify-center items-start p-5 flex-1 overflow-y-auto flex-wrap" style={{ gap: `${spacing}px` }}>
+    <div
+      className="flex justify-center items-start p-5 flex-1 overflow-y-auto flex-wrap"
+      style={{ gap: `${spacing}px` }}
+    >
       {tableau.map((pile, pileIndex) => {
         const isTarget =
           dropTarget?.type === "tableau" && dropTarget.pileIndex === pileIndex;
@@ -84,7 +87,9 @@ export const Tableau = memo(function Tableau({
                 height: `${cardHeight}px`,
               }}
             >
-              <div className="text-[3em] font-bold select-none text-black/15">K</div>
+              <div className="text-[3em] font-bold select-none text-black/15">
+                K
+              </div>
             </div>
 
             {/* Render cards on top of the placeholder */}

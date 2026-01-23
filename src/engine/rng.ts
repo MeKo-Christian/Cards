@@ -66,7 +66,7 @@ function initAlea(args: unknown[]): {
   let s0 = 0;
   let s1 = 0;
   let s2 = 0;
-  let c = 1;
+  const c = 1;
 
   const mash = createMash();
   s0 = mash(" ");

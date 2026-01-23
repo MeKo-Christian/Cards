@@ -40,7 +40,10 @@ export const Foundations = memo(function Foundations({
   const holderHeight = cardHeight + borderSize * 2;
 
   return (
-    <div className="flex justify-center items-center p-5 flex-wrap" style={{ gap: `${spacing}px` }}>
+    <div
+      className="flex justify-center items-center p-5 flex-wrap"
+      style={{ gap: `${spacing}px` }}
+    >
       {foundations.map((pile, index) => {
         const isTarget =
           dropTarget?.type === "foundation" &&

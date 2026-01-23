@@ -4,15 +4,8 @@
 
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type {
-  DragState,
-  DropTarget,
-  PendingDrag,
-} from "../types/drag";
-import {
-  DRAG_THRESHOLD_PX,
-  HOVER_HIGHLIGHT_DELAY_MS,
-} from "../types/drag";
+import type { DragState, DropTarget, PendingDrag } from "../types/drag";
+import { DRAG_THRESHOLD_PX, HOVER_HIGHLIGHT_DELAY_MS } from "../types/drag";
 import {
   areTargetsEqual,
   getDropTargetFromPoint,
